@@ -1,0 +1,92 @@
+<!-- Basic UI for running the demo in the browser -->
+
+<html>
+  <head>
+    <title>Least Square</title>
+    <style>
+    table {
+  border: 5px solid black;
+  border-collapse: collapse;
+  background-color:#fdf5e6
+  font-weight: bold;
+  font-family:Arial, Verdana, Tahoma, Helvetica, sans-serif;
+}
+
+th {
+  border-collapse: collapse;
+  text-align:center
+  font-size:25px;
+  color:#EDEDED;
+}
+
+td {
+  border-collapse: collapse;
+  background-color:#D5D5D5;
+  font-size:16px;
+}
+
+tr {
+  height: 30px;
+}
+
+      .error {
+        color: #FF0000;
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/bignumber.js/bignumber.min.js"></script>
+    <script src="/lib/sodium.js"></script>
+    <script src="/lib/jiff-client.js"></script>
+    <script src="/lib/ext/jiff-client-bignumber.js"></script>
+    <script src="/lib/ext/jiff-client-fixedpoint.js"></script>
+    <script src="/lib/ext/jiff-client-negativenumber.js"></script>
+    <script src="/lib/ext/jiff-client-performance.js"></script>
+
+    <!-- Contains the MPC implementation -->
+    <script type="text/javascript" src="./mpc.js"></script>
+
+    <!-- Contains UI Handlers and Input Checks -->
+    <script type="text/javascript" src="./client.js"></script>
+  </head>
+  <body>
+  <table align="center" style="background-color:#fdf5e6; width:50%;">
+  <tr style="height: 60px"><th colspan="4" style="color:#393837;font-size:24px">MPC Least Square</td></tr>
+  <tr style="height: 30px"><th colspan="2" style="background-color:#4B4B4B;color:#EDEDED">Connect MPC</th>
+    <th colspan="2" style="background-color:#4B4B4B;color:#EDEDED">Input Values</th></tr>
+  <tr style="height: 14px;color:#393837;"><td colspan="4"></td</tr>
+  <tr>
+    <td style="text-align:right"><label for="computation_id">Computation ID</label></td>
+    <td><input id="computation_id" value="test"></input></td>
+    <td style="text-align:right"><label for="x_val">X Value</label></td>
+    <td><input id="xVal" type="text" placeholder="X" disabled="disabled"/></input></td>
+  </tr>
+  <tr>
+    <td style="text-align:right"><label for="count">Party Count</label></td>
+    <td><input id="count" pattern="[0-9]*" value="2"> &nbsp; <button id="connectButton" onclick="connect();">Connect</button></td>
+    <td style="text-align:right"><label for="y_val">Y Value</label></td>
+    <td><input id="yVal" type="text" placeholder="Y" disabled="disabled"/></input>
+      <button onclick="pushCoordinate();" id="addButton" disabled="disabled">Add Point!</button></td>
+  </tr>
+  <tr style="height: 14px;color:#393837;"><td colspan="4"></td</tr>
+  <tr style="height: 30px">
+    <th colspan="2" style="background-color:#4B4B4B;color:#EDEDED">
+      <button onclick="submit();" id="submitButton"  disabled="disabled">Calculate Least Squares!</button>
+</th>
+    <th colspan="2" style="background-color:#4B4B4B;color:#EDEDED">Graph</th>
+  </tr>
+  <tr style="height: 14px;color:#393837;"><td colspan="4"></td</tr>
+    <tr style="color:#393837;">
+      <td colspan="2">
+        <div id="output" style="height:300px; padding: 5px; width: inherit;font:16px/26px Georgia, Garamond, Serif;overflow:auto;">
+        <div id="perfDiv"></div>
+      </td>
+      <td colspan="2"><button onclick="clearCoordinates();" id="clearButton"  disabled="disabled">Clear</button>
+        <div style="width:300px; height:300px;">
+        <canvas id="myChart" width="400" height="400"></canvas>
+      </div></td>
+    </tr>
+</table>
+  </body>
+</html>
